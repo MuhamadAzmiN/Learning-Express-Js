@@ -1,24 +1,51 @@
 const express = require('express')
+const expressLayouts = require('express-ejs-layouts')
 const app = express()
 const port = 3000
 
 
-app.get('/', (req, res) => {
-//   res.json({
-//     nama : "Muhamad Azmi Naziyulloh",
-//     email : "azmi89017@gmail.com"
-//   })
+// use ejs 
 
-    res.sendFile('./index.html', {root: __dirname})
+app.set('view engine', 'ejs')
+app.use(expressLayouts)
+
+
+
+app.get('/', (req, res) => {
+
+    const mahasiswa = [
+        {
+            nama : "azmi",
+            email : "azmi8017@gmail.com"
+        },
+        {
+            nama : "asep",
+            email : "asep@gmail.com"
+        }
+    ]
+
+
+
+    res.render('index', {
+        layout : 'layouts/main-layout',
+        title : "Home",
+        nama : "azmi",
+        mahasiswa : mahasiswa
+    })
 })
 app.get('/about', (req, res) => {
-//   res.send('ini adalah halaman about!')
-    res.sendFile('./about.html', {root: __dirname})
+
+    res.render('about', {
+        layout : 'layouts/main-layout',
+        title : "About"
+    })
 })
 
 app.get('/contact', (req, res) => {
-//   res.send('ini adalah halaman contact!')
-    res.sendFile('./contact.html', {root: __dirname})
+    res.render('contact', {
+        layout : 'layouts/main-layout',
+        title : "Contact"
+    })
 })
 
 app.get('/produk/:id', (req,res) => {
